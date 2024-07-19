@@ -158,7 +158,7 @@ const ChatElement = ({ img, name, msg, time, unread, online, id }) => {
             </StyledBadgeOff>
           )}
           <Stack spacing={0.3}>
-            <Typography variant="subtitle2">{name}</Typography>
+            <Typography variant="subtitle2" color="text.primary" >{name}</Typography>
             {msg.includes("connected") || !msg.includes("You:") ? (
 
               <Typography variant="subtitle2" color="text.primary" sx={{ fontSize: '11px' }} >

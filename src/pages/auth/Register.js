@@ -20,7 +20,7 @@ const Register = () => {
           Start for free
         </Typography>
 
-        <Typography variant="h4">Sign Up to Zchat</Typography>
+        <Typography variant="h4"  sx={{color: "text.primary" }}>Sign Up To ZChat</Typography>
 
         {/* Register Form */}
         <RegisterForm />

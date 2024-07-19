@@ -56,13 +56,13 @@ const MainLayout = () => {
             }}
             src={avatar}
           />
-          <Typography variant="h4">GENZ Chat</Typography>
+          <Typography variant="h4" sx={{color: "text.primary" }}>GENZ Chat</Typography>
         </Box>
 
         <Divider
           orientation="vertical"
           flexItem
-          sx={{ height: "50%", alignSelf: "center" , borderWidth: 1, borderColor: "grey.500"}}
+          sx={{ height: "50%", alignSelf: "center" , borderWidth: 0.5, borderColor: "grey.500"}}
         />
 
         <Box sx={{ flex: 1, ml: 10 }}>

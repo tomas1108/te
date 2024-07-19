@@ -4,7 +4,8 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { LoginUser } from "../../redux/slices/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { LoadingButton } from "@mui/lab";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -25,6 +26,7 @@ const initialValues = {
 
 export function LoginFom() {
   const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -56,9 +58,9 @@ export function LoginFom() {
     >
       {/* begin::Form group */}
       <div className="fv-row mb-8">
-        <label className="form-label fs-6 fw-bolder text-gray-900">Email</label>
+        <label className="form-label fs-6 fw-bolder text-gray-900">Email *</label>
         <input
-          placeholder="Email"
+          placeholder="eg.@example.com"
           {...formik.getFieldProps("email")}
           className={clsx(
             "form-control bg-transparent",
@@ -82,10 +84,10 @@ export function LoginFom() {
       {/* begin::Form group */}
       <div className="fv-row mb-3">
         <label className="form-label fw-bolder text-gray-900 fs-6 mb-0">
-          Password
+          Password *
         </label>
         <input
-          placeholder="Password"
+          placeholder="********"
           type="password"
           autoComplete="off"
           {...formik.getFieldProps("password")}
@@ -114,7 +116,7 @@ export function LoginFom() {
         <div />
 
         {/* begin::Link */}
-        <Link to="/auth/forgot-password" className="link-primary">
+        <Link to="/auth/reset-password" className="link-primary">
           Forgot Password ?
         </Link>
         {/* end::Link */}
@@ -123,7 +125,7 @@ export function LoginFom() {
 
       {/* begin::Action */}
       <div className="d-grid mb-10">
-        <button
+        {/* <button
           type="submit"
           id="kt_sign_in_submit"
           className="btn btn-primary"
@@ -136,12 +138,23 @@ export function LoginFom() {
               <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
             </span>
           )}
-        </button>
+        </button> */}
+
+        <LoadingButton
+          fullWidth
+          color="primary"
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={loading}
+        >
+          Sign In
+        </LoadingButton>
       </div>
       {/* end::Action */}
 
       <div className="text-gray-500 text-center fw-semibold fs-6">
-        Not a Member yet?{" "}
+      Don't have an account yet?{" "}
         <Link to="/auth/register" className="link-primary">
           Sign up
         </Link>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
-  Link,
+  
   Stack,
   Alert,
   IconButton,
@@ -19,7 +19,7 @@ import { Eye, EyeSlash } from "phosphor-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RegisterUser } from "../../redux/slices/auth";
 import { useNavigate } from "react-router-dom";
-import { Link as RouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const emailDomains = [
   "gmail.com",
@@ -331,10 +331,17 @@ export default function AuthRegisterForm() {
       </LoadingButton>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
         <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
-          <Typography variant="body2">Already have an account?</Typography>
+          {/* <Typography variant="body2">Already have an account?</Typography>
           <Link component={RouterLink} to="/auth/login" variant="subtitle2">
             Sign In
-          </Link>
+          </Link> */}
+
+          <div className="text-gray-500 text-center fw-semibold fs-6">
+          Already have an account?{" "}
+            <Link to="/auth/login" className="link-primary">
+              Sign in
+            </Link>
+          </div>
         </Stack>
       </Box>
     </form>

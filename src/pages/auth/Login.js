@@ -7,12 +7,9 @@ import LoginForm from "../../sections/auth/LoginForm";
 const Login = () => {
   return (
     <>
-      <Stack spacing={2} sx={{ paddingTop:20, position: "relative" }}>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          Start for free
-        </Typography>
-
-        <Typography variant="h4">Sign In to Zchat</Typography>
+      <Stack spacing={4} sx={{ paddingTop:20, position: "relative" }}>
+      
+        <Typography variant="h4" sx={{ color: "text.primary" }}>Sign In To ZChat</Typography>
 
         {/* Login Form */}
         {/* <LoginForm /> */}

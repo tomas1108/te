@@ -128,7 +128,7 @@ export default function SettingsDrawer() {
                 justifyContent="space-between"
                 sx={{ py: 2, pr: 1, pl: 2.5 }}
               >
-                <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
+                <Typography variant="subtitle1" sx={{ flexGrow: 1 , color:"text.primary" }}>
                   Settings
                 </Typography>
 
@@ -146,14 +146,14 @@ export default function SettingsDrawer() {
 
               <Stack spacing={3} sx={{ p: 3 }}>
                 <Stack spacing={1.5}>
-                  <Typography variant="subtitle2">Direction</Typography>
+                  <Typography variant="subtitle2" sx={{color:"text.primary"}}>Direction</Typography>
                   <SettingDirection />
                 </Stack>
 
                 {/* thay đổi màu */}
 
                 <Stack spacing={1.5}>
-                  <Typography variant="subtitle2">Presets</Typography>
+                  <Typography variant="subtitle2" sx={{color:"text.primary"}}>Presets</Typography>
                   <SettingColorPresets />
                 </Stack>
 
@@ -164,7 +164,7 @@ export default function SettingsDrawer() {
 
 
                 <Stack spacing={1.5}>
-                  <Typography variant="subtitle2">
+                  <Typography variant="subtitle2" sx={{color:"text.primary"}}>
                     {language === 'EN' ? 'Language' : 'Ngôn ngữ'}
                   </Typography>
 
