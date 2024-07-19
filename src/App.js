@@ -1,73 +1,87 @@
-import logo from './logo.svg';
-import './App.css';
-import { useState } from 'react';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import ThemeSettings from "./components/settings";
+import ThemeProvider from "./theme";
+import Router from "./routes";
+import { closeSnackBar } from "./redux/slices/app";
+import { socket } from "./socket";
+
+const vertical = "bottom";
+const horizontal = "center";
+
+const Alert = React.forwardRef((props, ref) => (
+  <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+));
 
 function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const { user_id } = useSelector((state) => state.auth);
 
-  const handleLogin = async () => {
-    setError(''); // Clear previous errors
-    console.log("Logging");
-    try {
-      const response = await fetch('https://zchat-be.onrender.com/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: username, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+  useEffect(() => {
+    function handleBeforeUnload(e) {
+      console.log('socket:', socket); // Kiểm tra giá trị của socket
+      if (socket) {
+        socket.emit("end", { user_id });
+      } else {
+        console.warn('socket is undefined');
       }
-
-      const data = await response.json();
-      console.log('Login successful:', data);
-      // Handle successful login (e.g., store token in local storage, redirect)
-
-    } catch (error) {
-      console.error('There was a problem with the login:', error);
-      setError('Login failed. Please check your credentials.'); // Set error state
     }
-  };
+  
+    function handleKeyDown(e) {
+      e = e || window.event;
+      const isF5 = (e.which || e.keyCode) === 116;
+      const isCtrlR = e.ctrlKey && (e.which || e.keyCode) === 82;
+      if (isF5 || isCtrlR) {
+        e.preventDefault();
+        window.location.href = 'https://zchat-sxme.onrender.com/';
+      }
+    }
+  
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("keydown", handleKeyDown);
+  
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [user_id]);
+  
+
+  const { severity, message, open } = useSelector((state) => state.app.snackbar);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <div>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <br />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <br />
-          <button onClick={handleLogin}>Login</button>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-        </div>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <ThemeProvider>
+        <ThemeSettings>
+          <Router />
+        </ThemeSettings>
+      </ThemeProvider>
+
+      {message && open ? (
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          autoHideDuration={4000}
+          key={vertical + horizontal}
+          onClose={() => {
+            dispatch(closeSnackBar());
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Alert
+            onClose={() => {
+              console.log("This is clicked");
+              dispatch(closeSnackBar());
+            }}
+            severity={severity}
+            sx={{ width: "100%" }}
+          >
+            {message}
+          </Alert>
+        </Snackbar>
+      ) : null}
+    </>
   );
 }
 
