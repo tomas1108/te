@@ -20,7 +20,7 @@ const ResetPasswordForm = () => {
     })
 
     const defaultValues = {
-        email: "nguyendo76ngant@gmail.com",
+        email: "",
     }
 
     const methods = useForm({
@@ -55,16 +55,10 @@ const ResetPasswordForm = () => {
             size="large"
             type="submit"
             variant="contained"
+            color="primary"
             sx={{
               mt: 3,
-              bgcolor: "text.primary",
-              color: (theme) =>
-                theme.palette.mode === "light" ? "common.white" : "grey.800",
-              "&:hover": {
-                bgcolor: "text.primary",
-                color: (theme) =>
-                  theme.palette.mode === "light" ? "common.white" : "grey.800",
-              },
+             
             }}
           >
             Send Request

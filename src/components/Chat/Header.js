@@ -13,11 +13,21 @@ import {
   Stack,
   styled,
   Typography,
-  List, ListItem, ListItemIcon, ListItemText
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
-import { Edit, Group, Share, Block, Report, Delete } from '@mui/icons-material';
+import { Edit, Group, Share, Block, Report, Delete } from "@mui/icons-material";
 import { useTheme } from "@mui/material/styles";
-import { CaretDown, MagnifyingGlass, Phone, VideoCamera, X } from "phosphor-react";
+import {
+  CaretDown,
+  Info,
+  MagnifyingGlass,
+  Phone,
+  VideoCamera,
+  X,
+} from "phosphor-react";
 
 import useResponsive from "../../hooks/useResponsive";
 import { ToggleSidebar } from "../../redux/slices/app";
@@ -60,7 +70,7 @@ const StyledBadgeOff = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     backgroundColor: "#666964",
     color: theme.palette.mode === "light" ? "black" : "white",
-  
+
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
     "&::after": {
       position: "absolute",
@@ -69,12 +79,11 @@ const StyledBadgeOff = styled(Badge)(({ theme }) => ({
       width: "100%",
       height: "100%",
       borderRadius: "50%",
-     
+
       border: "1px solid currentColor",
       content: '""',
     },
   },
- 
 }));
 
 const Conversation_Menu = [
@@ -97,10 +106,13 @@ const ChatHeader = () => {
   const isMobile = useResponsive("between", "md", "xs", "sm");
   const theme = useTheme();
 
-  const { current_conversation } = useSelector((state) => state.conversation.direct_chat);
+  const { current_conversation } = useSelector(
+    (state) => state.conversation.direct_chat
+  );
   const isOnline = current_conversation?.online === "Online";
   const [backgroundImg, setBackgroundImg] = useState(faker.image.fashion()); // Sử dụng useState để lưu trữ URL ảnh nền
-  const [conversationMenuAnchorEl, setConversationMenuAnchorEl] = useState(null);
+  const [conversationMenuAnchorEl, setConversationMenuAnchorEl] =
+    useState(null);
   const openConversationMenu = Boolean(conversationMenuAnchorEl);
   const handleClickConversationMenu = (event) => {
     setConversationMenuAnchorEl(event.currentTarget);
@@ -125,13 +137,13 @@ const ChatHeader = () => {
     <>
       <Box
         p={2}
-        width={"100%"}
+        width={"100.3%"}
         sx={{
           backgroundColor:
             theme.palette.mode === "light"
               ? "#F8FAFF"
               : theme.palette.background,
-              boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.5)", 
+          boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.5)",
         }}
       >
         <Stack
@@ -140,13 +152,9 @@ const ChatHeader = () => {
           sx={{ width: "100%", height: "100%" }}
           justifyContent="space-between"
         >
-          <Stack
-            spacing={2}
-            direction="row"
-          >
+          <Stack spacing={2} direction="row">
             <Box onClick={handleOpenModal}>
-
-              { isOnline ? ( 
+              {isOnline ? (
                 <StyledBadge
                   overlap="circular"
                   anchorOrigin={{
@@ -162,8 +170,7 @@ const ChatHeader = () => {
                   />
                 </StyledBadge>
               ) : (
-
-                <StyledBadgeOff 
+                <StyledBadgeOff
                   theme={theme}
                   overlap="circular"
                   anchorOrigin={{
@@ -173,31 +180,26 @@ const ChatHeader = () => {
                   variant="dot"
                   onClick={() => switchUser()} // Gọi hàm switchUser khi click vào StyledBadge
                 >
-              
-                <Avatar
-                  alt={current_conversation?.name}
-                  src={current_conversation?.img}
-                />
+                  <Avatar
+                    alt={current_conversation?.name}
+                    src={current_conversation?.img}
+                  />
                 </StyledBadgeOff>
               )}
-              
             </Box>
             <Stack spacing={0.2}>
-              <Typography variant="subtitle2">
+              <Typography variant="subtitle2" color={"text.primary"}>
                 {current_conversation?.name}
               </Typography>
-              { isOnline ? (
-                
+              {isOnline ? (
                 <Typography variant="caption" color="text.secondary">
                   Online
-                  </Typography>
-                  
-                ) : (
-                  <Typography variant="caption" color="text.secondary">
-                    Offline
-                  </Typography>
-                )}
-              
+                </Typography>
+              ) : (
+                <Typography variant="caption" color="text.secondary">
+                  Offline
+                </Typography>
+              )}
             </Stack>
           </Stack>
           <Stack
@@ -205,16 +207,11 @@ const ChatHeader = () => {
             alignItems="center"
             spacing={isMobile ? 1 : 3}
           >
-            <IconButton onClick={() => {
-
-            }}>
+            {" "}
+            <IconButton onClick={() => {}}>
               <VideoCamera />
             </IconButton>
-            <IconButton
-              onClick={() => {
-
-              }}
-            >
+            <IconButton onClick={() => {}}>
               <Phone />
             </IconButton>
             {!isMobile && (
@@ -222,7 +219,11 @@ const ChatHeader = () => {
                 <MagnifyingGlass />
               </IconButton>
             )}
-            <Divider orientation="vertical" flexItem />
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{ borderWidth: 0.5, borderColor: "grey.500" }}
+            />
             <IconButton
               id="conversation-positioned-button"
               aria-controls={
@@ -232,9 +233,10 @@ const ChatHeader = () => {
               }
               aria-haspopup="true"
               aria-expanded={openConversationMenu ? "true" : undefined}
-              onClick={handleClickConversationMenu}
+              onClick={handleContactInfoClick}
             >
-              <CaretDown />
+              {/* <CaretDown /> */}
+              <Info />
             </IconButton>
             <Menu
               MenuListProps={{
@@ -258,7 +260,14 @@ const ChatHeader = () => {
               <Box p={1}>
                 <Stack spacing={1}>
                   {Conversation_Menu.map((el) => (
-                    <MenuItem key={el.title} onClick={el.title === "Contact info" ? handleContactInfoClick : handleCloseConversationMenu}>
+                    <MenuItem
+                      key={el.title}
+                      onClick={
+                        el.title === "Contact info"
+                          ? handleContactInfoClick
+                          : handleCloseConversationMenu
+                      }
+                    >
                       <Stack
                         sx={{ minWidth: 100 }}
                         direction="row"
@@ -283,25 +292,25 @@ const ChatHeader = () => {
       >
         <Box
           sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
             width: 400,
-            maxHeight: '90vh',
-            bgcolor: 'background.paper',
+            maxHeight: "90vh",
+            bgcolor: "background.paper",
             borderRadius: 2,
             boxShadow: 24,
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column',
-            position: 'relative', // để Box cha có thể chứa Box con tương đối
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column",
+            position: "relative", // để Box cha có thể chứa Box con tương đối
           }}
         >
           {/* Thêm Button đóng modal */}
           <Box
             sx={{
-              position: 'absolute',
+              position: "absolute",
               top: 0,
               right: 0,
               zIndex: 1,
@@ -315,39 +324,60 @@ const ChatHeader = () => {
           <ScrollbarNormal autoHeightMax="70vh">
             <Box
               sx={{
-                overflowY: 'auto',
+                overflowY: "auto",
               }}
             >
               {/* Phần 1 với ảnh nền */}
               <Box
                 sx={{
-                  backgroundColor: '#ffa690',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  height: 150,
-                  position: 'relative',
+                  backgroundColor: "#ffa690",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  height: 200,
+                  position: "relative",
                 }}
-              >
-              </Box>
-              <Box sx={{ textAlign: 'center', mt: -8, p: 2 }}>
+              ></Box>
+              <Box sx={{ textAlign: "center", mt: -8, p: 2 }}>
                 <Avatar
                   alt={current_conversation?.name}
                   src={current_conversation?.img}
-                  sx={{ width: 80, height: 80, margin: '0 auto', border: '2px solid white' }}
+                  sx={{
+                    width: 80,
+                    height: 80,
+                    margin: "0 auto",
+                    border: "2px solid white",
+                  }}
                 />
-                <Stack direction="row" justifyContent="center" alignItems="center">
-                  <Typography id="modal-modal-title" variant="h6" component="h2">
+                <Stack
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                    color={"text.primary"}
+                  >
                     {current_conversation?.name}
                   </Typography>
                 </Stack>
-                <Button variant="outlined" color="secondary" sx={{ mt: 1, width: "95%", borderRadius: 1 }}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  sx={{ mt: 1, width: "95%", borderRadius: 1 }}
+                >
                   Chat
                 </Button>
               </Box>
-              <Divider sx={{ my: 2 }} />
+              <Divider
+                sx={{ my: 2, borderWidth: 0.25, borderColor: "grey.400" }}
+              />
               {/* Phần 2 */}
               <Box sx={{ p: 2 }}>
-                <Typography sx={{ fontWeight: 'bold' }}>Personal Information</Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Personal Information
+                </Typography>
                 <Stack sx={{ mt: 2 }}>
                   <Stack direction="row">
                     <Typography sx={{ minWidth: 100 }}>Gender:</Typography>
@@ -356,22 +386,32 @@ const ChatHeader = () => {
 
                   <Stack direction="row">
                     <Typography sx={{ minWidth: 100 }}>Birthday:</Typography>
-                    <Typography>{current_conversation?.about?.birthday}</Typography>
+                    <Typography>
+                      {current_conversation?.about?.birthday}
+                    </Typography>
                   </Stack>
 
                   <Stack direction="row">
                     <Typography sx={{ minWidth: 100 }}>Email:</Typography>
-                    <Typography>{current_conversation?.about?.email}</Typography>
+                    <Typography>
+                      {current_conversation?.about?.email}
+                    </Typography>
                   </Stack>
                 </Stack>
               </Box>
-              <Divider sx={{ my: 2 }} />
+              <Divider
+                sx={{ my: 2, borderWidth: 0.25, borderColor: "grey.400" }}
+              />
               {/* Phần 3 */}
               <Box sx={{ px: 2, pb: 2 }}>
-                <Typography sx={{ fontWeight: 'bold', mb: 1 }}>Photo</Typography>
+                <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+                  Photo
+                </Typography>
                 <Typography>No shared images</Typography>
               </Box>
-              <Divider sx={{ my: 2 }} />
+              <Divider
+                sx={{ my: 2, borderWidth: 0.25, borderColor: "grey.400" }}
+              />
               <Box sx={{ px: 2, pb: 2 }}>
                 <List>
                   <ListItem button>

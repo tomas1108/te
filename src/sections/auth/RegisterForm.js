@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
-  
   Stack,
   Alert,
   IconButton,
@@ -49,6 +48,7 @@ export default function AuthRegisterForm() {
       lastName: "",
       email: "",
       password: "",
+      gender: "",
       passwordConfirm: "",
       birthDate: "",
       terms: false,
@@ -76,7 +76,7 @@ export default function AuthRegisterForm() {
   };
 
   const today = new Date();
-  const maxDate = `${today.getFullYear() - 1}-${String(
+  const maxDate = `${today.getFullYear() - 0}-${String(
     today.getMonth() + 1
   ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
@@ -108,7 +108,12 @@ export default function AuthRegisterForm() {
 
   const handlePasswordChange = (value) => {
     setValue("password", value);
-    if (!validatePasswordLength(value)) {
+    if (value === "") {
+      setError("password", {
+        type: "manual",
+        message: "Password is required",
+      });
+    } else if (!validatePasswordLength(value)) {
       setError("password", {
         type: "manual",
         message: "Password must be at least 8 characters",
@@ -134,6 +139,14 @@ export default function AuthRegisterForm() {
         message: "",
       });
     }
+  };
+
+  const validateBirthDate = (value) => {
+    const selectedYear = new Date(value).getFullYear();
+    if (selectedYear === today.getFullYear()) {
+      return "Birth year cannot be the current year";
+    }
+    return true;
   };
 
   return (
@@ -214,12 +227,15 @@ export default function AuthRegisterForm() {
           <Controller
             name="gender"
             control={control}
+            rules={{ required: "Please select " }}
             render={({ field }) => (
               <TextField
                 {...field}
                 select
                 label="Gender"
                 fullWidth
+                error={!!errors.gender}
+                helperText={errors.gender?.message}
                 value={field.value || ""}
                 onChange={(e) => field.onChange(e.target.value)}
               >
@@ -233,7 +249,10 @@ export default function AuthRegisterForm() {
           <Controller
             name="birthDate"
             control={control}
-            rules={{ required: "Birth date is required" }}
+            rules={{
+              required: "Birth date is required",
+              validate: validateBirthDate,
+            }}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -256,6 +275,7 @@ export default function AuthRegisterForm() {
         <Controller
           name="password"
           control={control}
+          rules={{ required: "Password is required" }}
           render={({ field }) => (
             <TextField
               {...field}
@@ -337,7 +357,7 @@ export default function AuthRegisterForm() {
           </Link> */}
 
           <div className="text-gray-500 text-center fw-semibold fs-6">
-          Already have an account?{" "}
+            Already have an account?{" "}
             <Link to="/auth/login" className="link-primary">
               Sign in
             </Link>

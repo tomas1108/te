@@ -62,10 +62,10 @@ const ProfileMenu = () => {
       >
         <Box p={1}  >
           <Stack spacing={1}>
-            <Typography variant="subtitle1" textAlign={"center"} sx={{ fontWeight: 500 }} >
+            <Typography variant="subtitle1" textAlign={"center"} sx={{ fontWeight: 500 }} color={"text.primary"} >
               {user_name}
             </Typography>
-            <Divider  />
+            <Divider  sx={{borderWidth: 0.25, borderColor: "grey.300"}}/>
             {Profile_Menu.map((el, idx)  => (
               <MenuItem key={idx} onClick={handleClose}>
                 <Stack

@@ -3,6 +3,7 @@ import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { CaretLeft } from "phosphor-react";
 import ProfileForm from "../../../sections/Dashboard/settings/ProfileForm";
 import { useDispatch } from "react-redux";
+import BackGround from "../../../assets/Images/65.jpg"
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -18,8 +19,10 @@ const Profile = () => {
         backgroundColor: (theme) =>
           // theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background,
         theme.palette.mode === "light" ? "#FFF" : theme.palette.background.background,
+   
         
       }}
+      
       
     >
       {/* //<Typography variant="h4">Profile</Typography> */}
@@ -32,6 +35,7 @@ const Profile = () => {
           theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper,
           boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
           borderRadius: 2, // Optional: Add rounded corners
+          // backgroundImage: `url(${BackGround})`,
         }}
       >
         <Stack p={4} spacing={1}>

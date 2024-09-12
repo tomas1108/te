@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Avatar,
   Box,
   Button,
   Divider,
@@ -36,6 +37,7 @@ import NotificationBell from "../../components/NotificationBell";
 import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
 import { GroupAdd, PersonAdd, PersonAddAlt, PersonAddAlt1 } from "@mui/icons-material";
 import CreateGroup from "../../sections/main/CreateGroup";
+
 
 const user_id = window.localStorage.getItem("user_id");
 
@@ -124,7 +126,7 @@ const Chats = () => {
 
         <Stack p={3} spacing={2} sx={{ maxHeight: "100vh", overflowY: "auto" }}>
           <Stack alignItems="center" justifyContent="space-between" direction="row">
-            <Typography variant="h5">Chats</Typography>
+            <Typography variant="h5" color={"text.primary"}>Chats</Typography>
             <Stack direction="row" alignItems="center" spacing={1}>
               <Tooltip title="Add friend">
                 <IconButton onClick={handleOpenDialog} sx={{ width: "max-content" }}>
@@ -137,6 +139,8 @@ const Chats = () => {
                 </IconButton>
               </Tooltip>
               <NotificationBell /> {/* Thêm component NotificationBell */}
+
+             
             </Stack>
           </Stack>
 
@@ -155,7 +159,7 @@ const Chats = () => {
             </Search>
           </Stack>
 
-          <Divider />
+          <Divider sx={{ borderWidth: 0.25, borderColor: "grey.400"}}/>
 
           {/* Danh sách các cuộc trò chuyện */}
           <Stack sx={{ flexGrow: 1 }}>

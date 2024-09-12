@@ -8,6 +8,7 @@ import {
   Tabs,
   Tab,
   Grid,
+  Divider,
 } from "@mui/material";
 import { ArrowLeft } from "phosphor-react";
 import useResponsive from "../../hooks/useResponsive";
@@ -39,19 +40,16 @@ const Media = () => {
       <Stack sx={{ height: "100%" }}>
         <Box
           sx={{
-            boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
             width: "100%",
-            backgroundColor:
-              theme.palette.mode === "light"
-                ? "#F8FAFF"
-                : theme.palette.background,
+            backgroundColor: theme.palette.background.default,
           }}
+          p={2}
         >
           <Stack
-            sx={{ height: "100%", p: 2 }}
+            sx={{ height: "100%", p: 1 }}
             direction="row"
             alignItems={"center"}
-            spacing={3}
+            spacing={1}
           >
             <IconButton
               onClick={() => {
@@ -60,9 +58,20 @@ const Media = () => {
             >
               <ArrowLeft />
             </IconButton>
-            <Typography variant="subtitle2">Shared</Typography>
+            <Typography variant="subtitle2" color={"text.primary"}>Shared</Typography>
           </Stack>
+          <Divider sx={{ borderWidth: 0.5, borderColor: "grey.400" }} />
         </Box>
+
+        
+
+        {/* <Stack
+            sx={{ height: "100%", p: 2 }}
+            direction="row"
+            alignItems={"center"}
+            spacing={3}
+          > */}
+
 
         <Tabs value={value} onChange={handleChange} centered>
           <Tab label="Media" />

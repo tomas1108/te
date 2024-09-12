@@ -91,7 +91,7 @@ const ResulSearchList = ({ search }) => {
         {/* <Typography variant="subtitle2" sx={{ color: "#676767" }}>
             Recent search
           </Typography> */}
-          <ScrollbarNormal>
+     
           
             {/* {searchResults.map((el, idx) => {
               return <UserElement key={idx} {...el} />;
@@ -115,16 +115,16 @@ const ResulSearchList = ({ search }) => {
                 )}
               </>
             )}
-          </ScrollbarNormal>
+        
       
         </Stack>
         <Stack spacing={2.4}>
-        <Typography variant="subtitle2" sx={{ color: "#676767" }}>
+        <Typography variant="subtitle2" sx={{ color: "text.primary" }}>
               Recommended
             </Typography>
           
           
-          <ScrollbarNormal  >
+          <ScrollbarNormal autoHeightMin="10vh" >
             {users.map((el, idx) => (
               <UserElement key={idx} {...el} />
             ))}
@@ -208,14 +208,17 @@ const FriendsList = () => {
 
   return (
     <>
-    <Stack sx={{ maxHeight: '100%', overflowY: 'auto' }} >
-      <ScrollbarNormal autoHeightMin="45vh">
+    <Stack  >
+
+      <ScrollbarNormal autoHeightMin="50vh">
+ 
         {friends.length > 0 ? (
           friends.map((el, idx) => <FriendElement key={idx} {...el} />)
         ) : (
           <p style={{ opacity: 0.5, textAlign: "center" }}>NO FRIEND FOUND</p>
         )}
       </ScrollbarNormal>
+   
       </Stack>
     </>
   );
@@ -280,7 +283,7 @@ const Friends = ({ open, handleClose }) => {
         </Tabs>
       </Stack>
 
-      <Box sx={{ height: 400, overflowY: "auto" }}> 
+      <Box sx={{ height: 400,  }}> 
       <DialogContent>
      
           <Stack spacing={2}>

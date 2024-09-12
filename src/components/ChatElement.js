@@ -130,8 +130,8 @@ const ChatElement = ({ img, name, msg, time, unread, online, id }) => {
         backgroundColor: getBackgroundColor(), // Sử dụng hàm để xác định màu nền
         transition: 'background-color 0.3s',
       }}
-      p={2}
-      my={2}
+      p={1}
+      my={1}
       tabIndex="0"
     >
       <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -178,7 +178,7 @@ const ChatElement = ({ img, name, msg, time, unread, online, id }) => {
           <Typography variant="caption" color="text.secondary" >
             {comparisonResult}
           </Typography>
-          <Badge className="unread-count" color="error" badgeContent={unread > 5 ? '5+' : unread} />
+          <Badge   className="unread-count" color="error" badgeContent={unread > 5 ? '5+' : unread} />
           {/* Button cho tùy chọn */}
 
         </Stack>

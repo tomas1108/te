@@ -336,7 +336,7 @@ const TextMsg = ({ el, menu, text }) => {
         ) : (
           <Tooltip title={time} placement={incoming ? "right" : "left"}>
             <Typography
-              variant="body2"
+              variant="body1"
               color={incoming ? theme.palette.text.primary : "#fff"}
               className={el.from ? "bold-text" : ""}
               sx={{ wordBreak: "break-word" }}

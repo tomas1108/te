@@ -33,6 +33,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToggleSidebar, UpdateSidebarType } from "../../redux/slices/app";
 import ScrollbarNormal from "../../components/ScrollbarNormal";
 import { updateStatusNotice } from "../../redux/slices/notification";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -91,7 +92,6 @@ const Contact = () => {
     (state) => state.conversation.direct_chat
   );
 
-
   const user_email = useSelector((state) => state.auth.user_email);
   const theme = useTheme();
   const isDesktop = useResponsive("up", "md");
@@ -101,11 +101,10 @@ const Contact = () => {
   const [isMuted, setIsMuted] = useState(false);
   const { playSound } = useSelector((state) => state.notifications);
 
-
   const handleMuteToggle = (event) => {
     const newMutedStatus = event.target.checked;
     dispatch(updateStatusNotice(!newMutedStatus));
-    console.log(`Notifications are ${newMutedStatus ? 'muted' : 'unmuted'}`);
+    console.log(`Notifications are ${newMutedStatus ? "muted" : "unmuted"}`);
   };
 
   const handleCloseBlock = () => {
@@ -114,8 +113,9 @@ const Contact = () => {
   const handleCloseDelete = () => {
     setOpenDelete(false);
   };
-  const messageTypes = ["Document", "Link", "Media"];
-  const filteredMessages = current_messages?.filter(msg => messageTypes.includes(msg.type)) || [];
+  const messageTypes = ["Document", "Link", "Image"];
+  const filteredMessages =
+    current_messages?.filter((msg) => messageTypes.includes(msg.type)) || [];
   const messageCount = filteredMessages.length;
 
   return (
@@ -126,23 +126,28 @@ const Contact = () => {
             width: "100%",
             backgroundColor: theme.palette.background.default,
           }}
+          p={2}
         >
           <Stack
             sx={{ height: "100%", p: 2 }}
             direction="row"
             alignItems={"center"}
-            justifyContent="space-between"
+            alignContent={"center"}
+            justifyContent="center"
             spacing={3}
           >
-            <Typography variant="subtitle2">Contact Info</Typography>
-            <IconButton
+            <Typography variant="subtitle2" color={"text.primary"}>
+              Contact Info
+            </Typography>
+            {/* <IconButton
               onClick={() => {
                 dispatch(ToggleSidebar());
               }}
             >
               <X />
-            </IconButton>
+            </IconButton> */}
           </Stack>
+          <Divider sx={{ borderWidth: 0.5, borderColor: "grey.400" }} />
         </Box>
         <ScrollbarNormal autoHeightMin={600} autoHide={false}>
           <Stack
@@ -154,17 +159,26 @@ const Contact = () => {
             p={3}
             spacing={3}
           >
-            <Stack alignItems="center" direction="row" spacing={2}>
+            <Stack
+              sx={{ justifyContent: "center", alignItems: "center" }}
+              direction="column"
+              spacing={2}
+            >
               <Avatar
                 src={current_conversation?.img}
                 alt={current_conversation?.name}
                 sx={{ height: 64, width: 64 }}
               />
-              <Stack spacing={0.5}>
-                <Typography variant="article" fontWeight={600}>
+              <Stack spacing={0.5} direction="row" alignItems="center">
+                <Typography variant="article" fontWeight={600} sx={{spacing:2}}>
                   {current_conversation?.name}
                 </Typography>
-                <Typography variant="body2" fontWeight={500}></Typography>
+                <IconButton sx={{ fontSize: 18, p: 0 }}>
+                  {" "}
+               
+                  <BorderColorIcon fontSize="inherit" />{" "}
+                  {/* Sử dụng fontSize từ IconButton */}
+                </IconButton>
               </Stack>
             </Stack>
             <Stack
@@ -172,7 +186,9 @@ const Contact = () => {
               alignItems="center"
               justifyContent={"space-evenly"}
             >
-              <Stack alignItems={"center"} spacing={1}>
+
+              
+              {/* <Stack alignItems={"center"} spacing={1}>
                 <IconButton>
                   <Phone />
                 </IconButton>
@@ -183,16 +199,31 @@ const Contact = () => {
                   <VideoCamera />
                 </IconButton>
                 <Typography variant="overline">Video</Typography>
-              </Stack>
+              </Stack> */}
             </Stack>
-            <Divider />
+
+
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent={"space-between"}
+            >
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Bell size={21} />
+                <Typography variant="subtitle2" color="text.primary">
+                  Mute Notifications
+                </Typography>
+              </Stack>
+              <AntSwitch checked={!playSound} onChange={handleMuteToggle} />
+            </Stack>
+            <Divider sx={{ borderWidth: 0.25, borderColor: "grey.300" }} />
             <Stack spacing={0.5}></Stack>
             <Stack
               direction="row"
               alignItems="center"
               justifyContent={"space-between"}
             >
-              <Typography variant="subtitle2">
+              <Typography variant="subtitle2" color={"text.primary"}>
                 Media, Links & Docs
               </Typography>
               <Button
@@ -206,7 +237,7 @@ const Contact = () => {
             </Stack>
             <Stack direction={"row"} alignItems="center" spacing={2}>
               {current_messages
-                .filter((message) => message.type === 'image') // Lọc ra chỉ các tin nhắn là hình ảnh
+                .filter((message) => message.type === "Image") // Lọc ra chỉ các tin nhắn là hình ảnh
                 .slice(0, 3) // Chỉ lấy tối đa 3 tin nhắn đầu tiên
                 .map((message, idx) => (
                   <Box key={idx}>
@@ -232,24 +263,11 @@ const Contact = () => {
                 <CaretRight />
               </IconButton>
             </Stack> */}
-            <Divider />
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent={"space-between"}
-            >
-              <Stack direction="row" alignItems="center" spacing={2}>
-                <Bell size={21} />
-                <Typography variant="subtitle2">
-                  Mute Notifications
-                </Typography>
-              </Stack>
-              <AntSwitch checked={!playSound} onChange={handleMuteToggle} />
-            </Stack>
-            {/* <Divider /> */}
+            <Divider sx={{ borderWidth: 0.25, borderColor: "grey.300" }} />
+            
+  
 
-
-            <Stack direction="row" alignItems={"center"} spacing={2}>
+            <Stack direction="row" alignItems={"center"} spacing={2}> 
               <Button
                 onClick={() => {
                   setOpenBlock(true);

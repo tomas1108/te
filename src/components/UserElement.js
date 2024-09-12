@@ -183,7 +183,7 @@ const UserElement = ({ avatar, firstName, lastName, online, _id, email ,requestS
             <Avatar alt={name} src={avatar} />
           )}
           <Stack spacing={0.3}>
-            <Typography variant="subtitle2">{name}</Typography>
+            <Typography variant="subtitle2" color={"text.primary"}>{name}</Typography>
             <Typography variant="caption">{email}</Typography>
           </Stack>
         </Stack>
@@ -295,7 +295,7 @@ const FriendRequestElement = ({
             <Avatar alt={name} src={avatar} />
           )}
           <Stack spacing={0.3}>
-            <Typography variant="subtitle2">{name}</Typography>
+            <Typography variant="subtitle2" color={"text.primary"}>{name}</Typography>
           </Stack>
         </Stack>
         <Stack direction={"row"} spacing={2} alignItems={"center"}>
@@ -424,7 +424,7 @@ const FriendElement = ({ avatar, online, _id, name }) => {
             <Avatar alt={name} src={avatar} />
           )}
           <Stack spacing={0.3}>
-            <Typography variant="subtitle2">{name}</Typography>
+            <Typography variant="subtitle2" color={"text.primary"}>{name}</Typography>
           </Stack>
         </Stack>
         <Stack direction={"row"} spacing={2} alignItems={"center"}>
@@ -481,7 +481,7 @@ const MemberElement = ({ online, avatar, name, _id, email, onClick }) => {
             <Avatar alt={name} src={avatar} />
           )}
           <Stack spacing={0.3}>
-            <Typography variant="subtitle2">{name}</Typography>
+            <Typography variant="subtitle2" color={"text.primary"} >{name}</Typography>
             <Typography variant="caption">{email}</Typography>
           </Stack>
         </Stack>

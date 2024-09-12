@@ -132,7 +132,7 @@ const Settings = () => {
                 <CaretLeft size={24} color={"#4B4B4B"} />
               </IconButton>
 
-              <Typography variant="h5">Settings</Typography>
+              <Typography variant="h5" color={"text.primary"}>Settings</Typography>
             </Stack>
 
             {/* Profile */}

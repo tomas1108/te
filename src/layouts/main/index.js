@@ -47,22 +47,24 @@ const MainLayout = () => {
             sx={{
               width: 100,
               height: 100,
-              border: "2px solid",
-              borderColor:
-                theme.palette.mode === "light" ? "transparent" : "#ffffff",
-              backgroundColor:
-                theme.palette.mode === "dark" ? "#ffffff" : "transparent",
               mb: 2,
             }}
             src={avatar}
           />
-          <Typography variant="h4" sx={{color: "text.primary" }}>GENZ Chat</Typography>
+          <Typography variant="h4" sx={{ color: "text.primary" }}>
+            GENZ Chat
+          </Typography>
         </Box>
 
         <Divider
           orientation="vertical"
           flexItem
-          sx={{ height: "50%", alignSelf: "center" , borderWidth: 0.5, borderColor: "grey.500"}}
+          sx={{
+            height: "50%",
+            alignSelf: "center",
+            borderWidth: 0.5,
+            borderColor: "grey.500",
+          }}
         />
 
         <Box sx={{ flex: 1, ml: 10 }}>
@@ -74,22 +76,22 @@ const MainLayout = () => {
         sx={{
           textAlign: "center",
           py: 2,
-          
+
           mt: "auto",
         }}
       >
-                <Typography variant="body2" color="textSecondary">
+        <Typography variant="body2" color="textSecondary">
           &copy; {new Date().getFullYear()}{" "}
           <a
             href="https://www.facebook.com/Doo2002/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: 'blue', textDecoration: 'none' }}
+            style={{ color: "blue", textDecoration: "none" }}
           >
             Tomas Do
-          </a>. All rights reserved.
+          </a>
+          . All rights reserved.
         </Typography>
-
       </Box>
     </Container>
   );

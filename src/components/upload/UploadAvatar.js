@@ -24,7 +24,7 @@ const StyledDropZone = styled("div")(({ theme }) => ({
   border: `1px dashed ${alpha(theme.palette.grey[500], 0.32)}`,
 }));
 
-const StyledPlaceholder = styled("div")(({ theme }) => ({
+const StyledPlaceholder = styled("span")(({ theme }) => ({
   zIndex: 7,
   display: "flex",
   borderRadius: "50%",

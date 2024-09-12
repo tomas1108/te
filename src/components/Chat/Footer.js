@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+import "../../index.css";
 import {
   Box,
   IconButton,
@@ -19,6 +21,7 @@ import {
   PaperPlaneTilt,
   Smiley,
   Sticker,
+  Upload,
   User,
 } from "phosphor-react";
 import { useTheme, styled } from "@mui/material/styles";
@@ -28,8 +31,9 @@ import Picker from "@emoji-mart/react";
 import { socket } from "../../socket";
 
 import S3 from "../../utils/s3";
-import { Mic, Stop, VideoFile } from "@mui/icons-material";
+import { AttachFile, Mic, Stop, VideoFile } from "@mui/icons-material";
 import uploadFileToFirebase from "../../utils/firebase";
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { dateTime } from "../../utils/dateTime";
 import conversation from "../../redux/slices/conversation";
 
@@ -42,11 +46,9 @@ const StyledInput = styled(TextField)(({ theme }) => ({
     backgroundColor: theme.palette.background.paper, // Màu nền của input
     borderRadius: theme.shape.borderRadius, // Bo tròn góc
     border: `1px solid ${theme.palette.divider}`, // Thêm viền cho input
-
   },
   "& .MuiFilledInput-underline::before": {
     borderBottom: `1px solid ${theme.palette.divider} !important`, // Viền dưới khi chưa focus
-
   },
   "& .MuiFilledInput-underline::after": {
     borderBottom: "none", // Loại bỏ viền dưới sau khi focus
@@ -106,12 +108,13 @@ const ChatInput = ({
   );
   const { user_id } = useSelector((state) => state.auth);
 
-  const {room_id} = useSelector((state) => state.app);
+  const { room_id } = useSelector((state) => state.app);
   const messageFrom = current_messages.filter((msg) => msg.from === user_id);
   const messageLast = messageFrom[messageFrom.length - 1];
   const text = messageLast?.text;
   const idLastMessage = messageLast?._id;
 
+  const theme = useTheme();
   // console.log("lastMessage", text);
   // console.log("idLastMessage", idLastMessage);
 
@@ -252,8 +255,9 @@ const ChatInput = ({
                 setOpenActions(!openActions);
               }}
             >
-              <LinkSimple />
+              <AttachFileIcon />
             </IconButton>
+          
           ),
           endAdornment: (
             <Stack direction="row" spacing={1} alignItems="center">
@@ -273,7 +277,6 @@ const ChatInput = ({
                 onClick={() => {
                   setOpenPicker(!openPicker);
                 }}
-                
               >
                 <Smiley />
               </IconButton>
@@ -566,7 +569,7 @@ const Footer = () => {
             theme.palette.mode === "light"
               ? "#F8FAFF"
               : theme.palette.background,
-          boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.5)",
+          boxShadow: "0px 0px 1px rgba(0, 0, 0, 0.25)",
         }}
       >
         <Stack direction="row" alignItems={"center"} spacing={isMobile ? 1 : 3}>

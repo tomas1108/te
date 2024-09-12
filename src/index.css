@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+/* Mặc định (chế độ sáng) */
+.btn-active-light-primary {
+ 
+  color: #150101; 
+ 
+}
+
+/* Chế độ tối */
+.dark-theme .btn-active-light-primary {
+ 
+ color: white;
+}

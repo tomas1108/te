@@ -60,7 +60,7 @@ export function LoginFom() {
       <div className="fv-row mb-8">
         <label className="form-label fs-6 fw-bolder text-gray-900">Email *</label>
         <input
-          placeholder="eg.@example.com"
+          placeholder="@example.com"
           {...formik.getFieldProps("email")}
           className={clsx(
             "form-control bg-transparent",
@@ -75,7 +75,7 @@ export function LoginFom() {
         />
         {formik.touched.email && formik.errors.email && (
           <div className="fv-plugins-message-container">
-            <span role="alert">{formik.errors.email}</span>
+            <span role="alert" style={{ color: "red" }}>{formik.errors.email}</span>
           </div>
         )}
       </div>
@@ -87,7 +87,7 @@ export function LoginFom() {
           Password *
         </label>
         <input
-          placeholder="********"
+          placeholder="Password"
           type="password"
           autoComplete="off"
           {...formik.getFieldProps("password")}
@@ -104,7 +104,7 @@ export function LoginFom() {
         {formik.touched.password && formik.errors.password && (
           <div className="fv-plugins-message-container">
             <div className="fv-help-block">
-              <span role="alert">{formik.errors.password}</span>
+              <span role="alert" style={{ color: "red" }}>{formik.errors.password}</span>
             </div>
           </div>
         )}

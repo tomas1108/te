@@ -59,7 +59,7 @@ const GeneralApp = () => {
               alignItems="center"
               justifyContent={"center"}
             >
-              <Typography variant="h4">
+              <Typography variant="h4" color={"text.primary"}>
                 Let's Chat GENZ
               </Typography>
               <img src={images[imageIndex]} alt="Mô tả hình ảnh" />

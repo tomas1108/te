@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
-import { Avatar, Box, Divider, IconButton, Stack, Tooltip } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Divider,
+  IconButton,
+  Stack,
+  Tooltip,
+} from "@mui/material";
 import Logo from "../../assets/Images/favicon.ico";
 import useSettings from "../../hooks/useSettings";
 import { Nav_Buttons, Nav_Setting } from "../../data";
@@ -68,11 +75,15 @@ const SideBar = () => {
           <Avatar
             size={20}
             src={Logo}
-            onClick={() => { window.location.href = "https://zchat-sxme.onrender.com/"; }}
+            onClick={() => {
+              navigate("/app");
+            }}
             sx={{
               border: "2px solid",
-              borderColor: theme.palette.mode === "light" ? "transparent" : "#ffffff",
-              backgroundColor: theme.palette.mode === "dark" ? "#ffffff" : "transparent",
+              borderColor:
+                theme.palette.mode === "light" ? "transparent" : "#ffffff",
+              backgroundColor:
+                theme.palette.mode === "dark" ? "#ffffff" : "transparent",
             }}
           />
 
@@ -104,15 +115,18 @@ const SideBar = () => {
                       el.index === selectedTab
                         ? "#ffffff"
                         : theme.palette.mode === "light"
-                          ? "#080707"
-                          : theme.palette.text.primary,
+                        ? "#080707"
+                        : theme.palette.text.primary,
                   }}
                 >
                   {el.icon}
                 </IconButton>
               </Box>
             ))}
-            <Divider sx={{ width: 48 }} />
+
+            <Divider
+              sx={{ width: 48, borderWidth: 0.25, borderColor: "grey.400" }}
+            />
             {Nav_Setting.map((el) => (
               <Box
                 key={el.index} // Sửa key thành el.index
@@ -135,8 +149,8 @@ const SideBar = () => {
                       el.index === selectedTab
                         ? "#ffffff"
                         : theme.palette.mode === "light"
-                          ? "#080707"
-                          : theme.palette.text.primary,
+                        ? "#080707"
+                        : theme.palette.text.primary,
                   }}
                 >
                   {el.icon}
@@ -153,6 +167,5 @@ const SideBar = () => {
     </Box>
   );
 };
-
 
 export default SideBar;

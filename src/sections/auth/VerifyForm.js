@@ -109,7 +109,8 @@ export default function VerifyForm() {
           </Grid>
         </Grid>
         <Button
-            fullWidth
+            sx={{ width: "78%",left: "12%" }}
+         
             color="primary"
             size="large"
             type="submit"

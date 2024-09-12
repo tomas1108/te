@@ -116,7 +116,7 @@ const sortedNotifications = sortDateTimesDescending([...noti_list]);
           horizontal: 'center',
         }}
       >
-        <Typography variant="h6">Notifications</Typography>
+        <Typography variant="h6" color={"text.primary"}>Notifications</Typography>
         <Divider />
         <Stack sx={{ flexGrow: 1, height: "100%" }}>
           <ScrollbarNormal autoHeightMin="45vh" >
