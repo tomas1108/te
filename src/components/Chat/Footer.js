@@ -519,6 +519,7 @@ const Footer = () => {
         type: type,
         avatar: user_avatar,
       };
+      console.log("conversationData", conversationData);
 
       socket.emit("send_message", conversationData);
       setValue("");
