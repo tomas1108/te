@@ -7,7 +7,7 @@ let socket;
 //   });
 // } 
 const connectSocket = (user_id) => {
-  socket = io("lhttps://niuniu.allpokervip.com/", {
+  socket = io("https://niuniu.allpokervip.com/", {
     query: `user_id=${user_id}`,
   });
 } 
