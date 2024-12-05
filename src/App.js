@@ -35,7 +35,7 @@ function App() {
       const isCtrlR = e.ctrlKey && (e.which || e.keyCode) === 82;
       if (isF5 || isCtrlR) {
         e.preventDefault();
-        window.location.href = 'https://zchat-sxme.onrender.com/';
+        window.location.href = 'https://te-git-main-tomasdos-projects.vercel.app/';
       }
     }
   
