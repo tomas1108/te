@@ -105,7 +105,21 @@ const ChatHeader = () => {
   const dispatch = useDispatch();
   const isMobile = useResponsive("between", "md", "xs", "sm");
   const theme = useTheme();
+  const [showInput, setShowInput] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
+  const { current_messages } = useSelector(
+    (state) => state.conversation.direct_chat
+  );
+
+  
+  const handleButtonClick = () => {
+    setShowInput(!showInput); // Bật/tắt input
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
   const { current_conversation } = useSelector(
     (state) => state.conversation.direct_chat
   );
@@ -133,6 +147,13 @@ const ChatHeader = () => {
     setBackgroundImg(faker.image.fashion()); // Cập nhật backgroundImg với ảnh ngẫu nhiên mới khi chuyển đổi người dùng
     // Các bước khác để cập nhật thông tin người dùng khác
   };
+  const filteredMessages = current_messages.filter((message) =>
+    message.text.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+ 
+
+  
   return (
     <>
       <Box
@@ -214,11 +235,39 @@ const ChatHeader = () => {
             <IconButton onClick={() => {}}>
               <Phone />
             </IconButton>
-            {!isMobile && (
-              <IconButton>
-                <MagnifyingGlass />
-              </IconButton>
-            )}
+            
+            <IconButton onClick={handleButtonClick}>
+        <MagnifyingGlass />
+      </IconButton>
+      {showInput && (
+        <input
+          type="text"
+          value={searchQuery}
+         onChange={handleSearchChange}
+          placeholder="Search messages..."
+          className="absolute left-12 top-0 border border-gray-300 rounded px-3 py-1 shadow-md"
+        />
+      )}
+ 
+ 
+ <div className="mt-3">
+        {searchQuery && filteredMessages.length > 0 ? (
+          filteredMessages.map((message, index) => (
+            <div key={index} className="p-2 border-b border-gray-200">
+              {message.text}, {message.created_at}
+            </div>
+          ))
+        ) : searchQuery ? (
+          <p className="text-gray-500">No found .</p>
+        ) : (
+          current_messages.map((message, index) => (
+            <div key={index} className="">
+             
+            </div>
+          ))
+        )}
+      </div>
+      
             <Divider
               orientation="vertical"
               flexItem

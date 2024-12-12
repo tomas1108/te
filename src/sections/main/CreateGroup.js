@@ -104,81 +104,8 @@ const CreateGroupForm = ({ handleClose }) => {
 
   const onSubmit = async (data) => {
     handleClose();
-    try {
-      const groupID = generateGroupID(user_id);
-      const memberList = selectedMembers.map((member) => ({
-        name: member.name,
-        avatar: member.avatar,
-        memberID: member._id,
-        role: "member",
-        lastRead: 0,
-        unread: true,
-      }));
-
-      memberList.push({
-        name: user_name,
-        avatar: user_avatar,
-        memberID: user_id,
-        role: "leader",
-        lastRead: 0,
-        unread: true,
-      });
-
-      const groupInfor = {
-        _id: groupID,
-        avatar:
-          "https://chat-app-image-cnm.s3.ap-southeast-1.amazonaws.com/avatar.jpg",
-        name: user_name,
-        groupName: data.name,
-        message: "created new group",
-        time: getCurrentTime(),
-      };
-
-      const notification = {
-        memberAvatar: user_avatar,
-        memberID: user_id,
-        memberName: user_name,
-        message: " has been added by ",
-        members: memberList,
-        time: getCurrentTime(),
-        type: "notification",
-      };
-
-      // socket.emit("create-group-conversation", memberList, groupInfor, (response) => {
-      //   if (response.success) {
-      //     let connectionsLocal = {};
-      //     memberList.forEach((member) => {
-      //       dispatch(ResetCurrentMessages());
-      //       dispatch(UpdateGroupCurrentConversation({ ...groupInfor, members: memberList }));
-          
-      //     });
-      //     console.log("Group conversation created successfully.");
-      //   } else {
-      //     console.error("Error:", response.error);
-      //   }
-      // });
-
-      socket.emit(
-        "add-message",
-        notification,
-        groupID,
-        (response) => {
-          if (response.success) {
-            connections[group_current_conversation._id].send(
-              JSON.stringify({
-                type: "send-group-message",
-                message: notification,
-                groupID: groupID,
-              })
-            );
-          } else {
-            console.error("Error:", response.error);
-          }
-        }
-      );
-    } catch (error) {
-      console.error("Error creating group conversation:", error);
-    }
+    console.log("data", data);
+  
   };
 
   const handleMemberSelect = (friend) => {
@@ -213,7 +140,7 @@ const CreateGroupForm = ({ handleClose }) => {
   return (
     <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        <RHFTextField name="name" label="Group Name" />
+        <RHFTextField name="name" label="Group Name " />
         <RHFAutocomplete
           name="members"
           label="Members"
@@ -226,6 +153,7 @@ const CreateGroupForm = ({ handleClose }) => {
             setSelectedMembers(newValue);
             methods.setValue("members", newValue); // Cập nhật giá trị trong form
           }}
+          
           isOptionEqualToValue={(option, value) => option._id === value._id}
           ChipProps={{ size: "medium" }}
           inputValue={search} // Sử dụng state search làm giá trị nhập vào
