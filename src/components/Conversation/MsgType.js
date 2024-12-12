@@ -168,6 +168,10 @@ const TextMsg = ({ el ,menu }) => {
             <Typography variant="body2" color={el.incoming ? theme.palette.text : "#fff"}>
                 {el.message}
             </Typography>
+
+              <Typography variant="body2" color={el.incoming ? theme.palette.text : "#fff"}>
+                AI chatbot
+            </Typography>
         </Box>
          {/*   Tùy chọn tin nhắn  */}
         {menu && <MessageOptions />}

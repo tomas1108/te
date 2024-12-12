@@ -3,11 +3,26 @@ import { CaretLeft } from "phosphor-react";
 import React from "react";
 import { Link as RouterLink } from 'react-router-dom';
 import NewPasswordForm from "../../sections/auth/NewPasswordForm";
+import { useScreenDetector } from "../../hooks/useScreenDectector";
 const NewPassword = () => {
+    const { isMobile, isTablet, isDesktop } = useScreenDetector();
+
+    const getPaddingTop = () => {
+      if (isMobile) return 10;
+      if (isTablet) return 15;
+      return 20; // for isDesktop
+    };
     return (
         <>
-            <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>
-                <Typography variant="h3" paragraph>
+            <Stack
+        spacing={2}
+        sx={{ paddingTop: getPaddingTop(), position: "relative" }}
+      >
+                 <Typography
+          variant={isMobile ? "h4" : "h3"}
+          paragraph
+          sx={{ textAlign: isMobile ? "center" : "left" }}
+        >
                     Reset Password
                 </Typography>
                 <Typography sx={{ color: "tex.secondary", mb: 5 }}>

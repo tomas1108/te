@@ -516,3 +516,33 @@ export const UpdateUserAvatar = (user_id, formData) => {
     }
   };
 };
+
+
+export const translate = (text) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.post(
+        "/translate/translate",
+        { text },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getState().auth.token}`,
+          },
+        }
+      );
+      console.log("data", response.data);
+      return response.data;
+    } catch (error) {
+      let errorMessage = "Unknown error occurred.";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+      dispatch(showSnackbar({ severity: "error", message: errorMessage }));
+    }
+  };
+}

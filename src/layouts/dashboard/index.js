@@ -159,19 +159,19 @@ const DashboardLayout = () => {
       
       });
 
-      socket.on("have-seen", (data) => {
-        console.log("đã dc xem", data);
-        // dispatch(UpdateStatusSeen({
-        //   message_id: data.message_id,
-        //   seen: data.seen,
-        // }))
-        dispatch(showSnackbar({
-          severity: "success",
-          message: "Đã xem"
-        })
+      // socket.on("have-seen", (data) => {
+      //   console.log("đã dc xem", data);
+      //   // dispatch(UpdateStatusSeen({
+      //   //   message_id: data.message_id,
+      //   //   seen: data.seen,
+      //   // }))
+      //   dispatch(showSnackbar({
+      //     severity: "success",
+      //     message: "Đã xem"
+      //   })
         
-        )
-      });
+      //   )
+      // });
       socket.on("user_offline", (data) => {
         console.log("User offline", data);
         dispatch(

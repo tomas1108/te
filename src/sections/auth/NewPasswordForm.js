@@ -77,18 +77,16 @@ const NewPasswordForm = () => {
                 </RHFTextField>
                 <RHFTextField name="passwordConfirm" type={showPassWord ? "text" : "password"} label="Confirm Password" >
                 </RHFTextField>
-                <Button fullWidth color="inherit" size="large" type="submit" variant="contained"
-                sx={{
-                    bgcolor: "button.bgcolor",
-                    color: (theme) =>
-                      theme.palette.mode === "light" ? "button.color" : "button.color",
-                    "&:hover": {
-                      bgcolor: "button.hvbgcolor",
-                      color: (theme) =>
-                        theme.palette.mode === "light" ? "button.color" : "button.color",
-                    },
-                    mt: 1,
-                  }}
+                <Button 
+               fullWidth
+               size="large"
+               type="submit"
+               variant="contained"
+               color="primary"
+               sx={{
+                 mt: 3,
+                
+               }}
                   >
                 Submit
             </Button>

@@ -211,6 +211,9 @@ const TextMsg = ({ el, menu, text }) => {
   const theme = useTheme();
   const incoming = el.from !== user_id;
   const [isFocused, setIsFocused] = React.useState(false);
+  const [translatedText, setTranslatedText] = React.useState(null);
+  const [isTranslating, setIsTranslating] = React.useState(false);
+  const [translateQueue, setTranslateQueue] = React.useState([]); // Queue for messages to translate
   const [reaction, setReaction] = React.useState(null);
   const [showRemoveReaction, setShowRemoveReaction] = React.useState(false);
   const { room_id } = useSelector((state) => state.app);
@@ -264,6 +267,40 @@ const TextMsg = ({ el, menu, text }) => {
     console.log("Selected message ID: ", message_id);
   };
 
+  React.useEffect(() => {
+    // Regex để kiểm tra văn bản có chứa ký tự tiếng Việt
+    const vietnameseRegex = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
+  
+    if (
+      incoming && // Chỉ xử lý khi có dữ liệu mới
+      /^[a-zA-Z\s]+$/.test(el.text) && // Văn bản chỉ chứa ký tự tiếng Anh
+      !vietnameseRegex.test(el.text) // Không chứa ký tự tiếng Việt
+    ) {
+      console.log("Translating text:", el.text);
+      setIsTranslating(true);
+      fetch("http://localhost:3001/translate/translate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: el.text }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Translation data:", data);
+          setTranslatedText(data.translatedText);
+        })
+        .catch((error) => {
+          console.error("Translation error:", error);
+        })
+        .finally(() => {
+          setIsTranslating(false);
+        });
+    }
+  }, [el.text, incoming]);
+  
+
+
   const handleMouseEnter = () => {
     setIsFocused(true);
   };
@@ -315,39 +352,91 @@ const TextMsg = ({ el, menu, text }) => {
     // handle options
   };
 
-  const renderContent = () => {
-    return (
-      <React.Fragment>
-        {isLink(el.text) ? (
-          <a
-            href={el.text}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleLinkClick}
-            style={{
-              color: incoming
-                ? theme.palette.text.main
-                : theme.palette.common.white,
-              wordBreak: "break-word",
-            }}
+
+  
+
+  React.useEffect(() => {
+    const vietnameseRegex = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
+
+    if (
+      incoming &&
+      /^[a-zA-Z\s]+$/.test(el.text) &&
+      !vietnameseRegex.test(el.text)
+    ) {
+      setTranslateQueue((prevQueue) => [...prevQueue, el.text]);
+    }
+  }, [el.text, incoming]);
+
+  React.useEffect(() => {
+    const translateNext = async () => {
+      if (translateQueue.length > 0 && !isTranslating) {
+        setIsTranslating(true);
+        const textToTranslate = translateQueue[0];
+
+        try {
+          const response = await fetch("http://localhost:3001/translate/translate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ text: textToTranslate }),
+          });
+          const data = await response.json();
+          setTranslatedText(data.translatedText);
+        } catch (error) {
+          console.error("Translation error:", error);
+        } finally {
+          setIsTranslating(false);
+          setTranslateQueue((prevQueue) => prevQueue.slice(1));
+        }
+      }
+    };
+
+    const timeout = setTimeout(translateNext, 2000); // Ensure at least 2 seconds delay for translation
+
+    return () => clearTimeout(timeout);
+  }, [translateQueue, isTranslating]);
+
+  const renderContent = () => (
+    <React.Fragment>
+      {isLink(el.text) ? (
+        <a
+          href={el.text}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: incoming
+              ? theme.palette.text.main
+              : theme.palette.common.white,
+            wordBreak: "break-word",
+          }}
+        >
+          {el.text}
+        </a>
+      ) : (
+        <Tooltip title={time} placement={incoming ? "right" : "left"}>
+          <Typography
+            variant="body1"
+            color={incoming ? theme.palette.text.primary : "#fff"}
+            sx={{ wordBreak: "break-word" }}
           >
             {el.text}
-          </a>
-        ) : (
-          <Tooltip title={time} placement={incoming ? "right" : "left"}>
-            <Typography
-              variant="body1"
-              color={incoming ? theme.palette.text.primary : "#fff"}
-              className={el.from ? "bold-text" : ""}
-              sx={{ wordBreak: "break-word" }}
-            >
-              {el.text}
-            </Typography>
-          </Tooltip>
-        )}
-      </React.Fragment>
-    );
-  };
+          </Typography>
+        </Tooltip>
+      )}
+      {incoming && (
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          sx={{ mt: 1, fontStyle: "italic", wordBreak: "break-word" }}
+        >
+          {isTranslating && translateQueue[0] === el.text
+            ? "AI translating..."
+            : translatedText}
+        </Typography>
+      )}
+    </React.Fragment>
+  );
 
   return (
     <Stack direction="row" justifyContent={incoming ? "start" : "end"}>
@@ -368,13 +457,14 @@ const TextMsg = ({ el, menu, text }) => {
           borderRadius: 1.5,
           width: "max-content",
           display: "flex",
-          alignItems: "center",
+     
+          flexDirection: "column", // Ensure translation is below
           position: "relative",
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {renderContent()}
+        {renderContent()} 
         {isFocused && (
           <Box
             display="flex"

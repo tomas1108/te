@@ -88,7 +88,7 @@ const MainLayout = () => {
             rel="noopener noreferrer"
             style={{ color: "blue", textDecoration: "none" }}
           >
-            Tomas Do
+            Nhóm 8
           </a>
           . All rights reserved.
         </Typography>
