@@ -278,7 +278,7 @@ const TextMsg = ({ el, menu, text }) => {
     ) {
       console.log("Translating text:", el.text);
       setIsTranslating(true);
-      fetch("http://localhost:3001/translate/translate", {
+      fetch("https://be-kagd.onrender.com/translate/translate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
