@@ -435,7 +435,7 @@ export const UpdateUserProfile = (user_id, formData) => {
       console.log("USER ID", user_id);
       const response = await axios
         .post(
-          "/user/update-profile",
+          "/user/update-me",
           { _id: user_id, ...formData }, // Thêm user_id và dữ liệu từ form vào payload
           {
             headers: {
