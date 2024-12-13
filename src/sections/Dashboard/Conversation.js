@@ -272,9 +272,7 @@ const TextMsg = ({ el, menu, text }) => {
     const vietnameseRegex = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
   
     if (
-      incoming && // Chỉ xử lý khi có dữ liệu mới
-      /^[a-zA-Z\s]+$/.test(el.text) && // Văn bản chỉ chứa ký tự tiếng Anh
-      !vietnameseRegex.test(el.text) // Không chứa ký tự tiếng Việt
+     !vietnameseRegex.test(el.text) // Không chứa ký tự tiếng Việt
     ) {
       console.log("Translating text:", el.text);
       setIsTranslating(true);
